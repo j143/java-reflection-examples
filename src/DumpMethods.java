@@ -2,13 +2,15 @@ import java.lang.reflect.*;
 
 class A {}
 
+/**
+ * Check Class Instance Objects
+ */
+
 class instance1 {
-    public static void main(String args[])
-    {
+    public static void main(String args[]) {
         try {
             Class cls = Class.forName("A");
-            boolean b1
-                    = cls.isInstance(new Integer(37));
+            boolean b1 = cls.isInstance(new Integer(37));
             System.out.println(b1);
             boolean b2 = cls.isInstance(new A());
             System.out.println(b2);
@@ -19,10 +21,11 @@ class instance1 {
     }
 }
 
+/**
+ *
+ */
 class method1 {
-    private int f1(
-            Object p, int x) throws NullPointerException
-    {
+    private int f1(Object p, int x) throws NullPointerException {
         if (p == null)
             throw new NullPointerException();
         return x;
@@ -33,23 +36,20 @@ class method1 {
         try {
             Class cls = Class.forName("method1");
 
-            Method methlist[]
-                    = cls.getDeclaredMethods();
-            for (int i = 0; i < methlist.length;
-                 i++) {
+            Method methlist[] = cls.getDeclaredMethods();
+            for (int i = 0; i < methlist.length; i++) {
                 Method m = methlist[i];
                 System.out.println("name = " + m.getName());
-                        System.out.println("decl class = " +
-                                m.getDeclaringClass());
+                System.out.println("decl class = " + m.getDeclaringClass());
                 Class pvec[] = m.getParameterTypes();
                 for (int j = 0; j < pvec.length; j++)
                     System.out.println("param #" + j + " " + pvec[j]);
-                            Class evec[] = m.getExceptionTypes();
+
+                Class evec[] = m.getExceptionTypes();
                 for (int j = 0; j < evec.length; j++)
-                    System.out.println("exc #" + j
-                            + " " + evec[j]);
-                System.out.println("return type = " +
-                        m.getReturnType());
+                    System.out.println("exc #" + j + " " + evec[j]);
+
+                System.out.println("return type = " + m.getReturnType());
                 System.out.println("-----");
             }
         }
@@ -70,21 +70,20 @@ class constructor1 {
         try {
             Class cls = Class.forName("constructor1");
 
-            Constructor ctorlist[]
-                    = cls.getDeclaredConstructors();
+            Constructor ctorlist[] = cls.getDeclaredConstructors();
             for (int i = 0; i < ctorlist.length; i++) {
                 Constructor ct = ctorlist[i];
                 System.out.println("name = " + ct.getName());
-                        System.out.println("decl class = " +
-                                ct.getDeclaringClass());
+                System.out.println("decl class = " + ct.getDeclaringClass());
+
                 Class pvec[] = ct.getParameterTypes();
                 for (int j = 0; j < pvec.length; j++)
-                    System.out.println("param #"
-                            + j + " " + pvec[j]);
+                    System.out.println("param #" + j + " " + pvec[j]);
+
                 Class evec[] = ct.getExceptionTypes();
                 for (int j = 0; j < evec.length; j++)
-                    System.out.println(
-                            "exc #" + j + " " + evec[j]);
+                    System.out.println("exc #" + j + " " + evec[j]);
+
                 System.out.println("-----");
             }
         }
@@ -104,18 +103,14 @@ class field1 {
         try {
             Class cls = Class.forName("field1");
 
-            Field fieldlist[]
-                    = cls.getDeclaredFields();
-            for (int i
-                 = 0; i < fieldlist.length; i++) {
+            Field fieldlist[] = cls.getDeclaredFields();
+            for (int i = 0; i < fieldlist.length; i++) {
                 Field fld = fieldlist[i];
                 System.out.println("name = " + fld.getName());
-                        System.out.println("decl class = " +
-                                fld.getDeclaringClass());
+                System.out.println("decl class = " + fld.getDeclaringClass());
                 System.out.println("type = " + fld.getType());
                 int mod = fld.getModifiers();
-                System.out.println("modifiers = " +
-                        Modifier.toString(mod));
+                System.out.println("modifiers = " + Modifier.toString(mod));
                 System.out.println("-----");
             }
         }
@@ -153,16 +148,30 @@ class method2 {
     }
 }
 
+
+class array1 {
+    public static void main(String args[]) {
+        try {
+            Class cls = Class.forName("java.lang.String");
+            Object arr = Array.newInstance(cls, 10);
+            Array.set(arr, 5, "this is a test");
+            String s = (String)Array.get(arr, 5);
+            System.out.println(s);
+        }
+        catch (Throwable e) {
+            System.err.println(e);
+        }
+    }
+}
+
 class array2 {
     public static void main(String args[])
     {
         int dims[] = new int[]{5, 10, 15};
-        Object arr
-                = Array.newInstance(Integer.TYPE, dims);
+        Object arr = Array.newInstance(Integer.TYPE, dims);
 
         Object arrobj = Array.get(arr, 3);
-        Class cls =
-                arrobj.getClass().getComponentType();
+        Class cls = arrobj.getClass().getComponentType();
         System.out.println(cls);
         arrobj = Array.get(arrobj, 5);
         Array.setInt(arrobj, 10, 37);
